@@ -38,6 +38,8 @@ public class CompletionGPT {
         Client client = ClientBuilder.newClient();
         Response response = null;
         
+        log.debug("Parámetros recibidos: " + param);        
+        
         try {
             // Se prepara la Request
             MessageGPT message = new MessageGPT(param.getRole(), prompt);

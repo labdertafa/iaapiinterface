@@ -21,4 +21,9 @@ public class ParametrosGPT {
     private int maxTokens;
     private double temperature;
     private double repetitionPenalty;
+
+    @Override
+    public String toString() {
+        return "ParametrosGPT{" + "bearerToken=" + bearerToken + ", endpoint=" + endpoint + ", role=" + role + ", model=" + model + ", maxTokens=" + maxTokens + ", temperature=" + temperature + ", repetitionPenalty=" + repetitionPenalty + '}';
+    }
 }

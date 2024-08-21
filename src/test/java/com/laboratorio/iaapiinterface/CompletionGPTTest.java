@@ -1,4 +1,4 @@
-package com.laboratorio.iaaoiinterface;
+package com.laboratorio.iaapiinterface;
 
 import com.laboratorio.iaapiinterface.text.CompletionGPT;
 import com.laboratorio.iaapiinterface.text.modelo.ParametrosGPT;
@@ -20,7 +20,7 @@ public class CompletionGPTTest {
         String prompt = "Dime algo gracioso";
         IAApiInterfaceConfig config = IAApiInterfaceConfig.getInstance();
         String token = config.getProperty("bearer_token");
-        String endpoint = config.getProperty("https://api.aimlapi.com/chat/completions");
+        String endpoint = config.getProperty("text_endpoint");
         String role = config.getProperty("text_role");
         String model = config.getProperty("text_model");
         int maxTokens = Integer.parseInt(config.getProperty("text_max_tokens"));

@@ -1,5 +1,6 @@
 package com.laboratorio.iaapiinterface.utils;
 
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
@@ -11,7 +12,7 @@ import org.apache.logging.log4j.Logger;
  * @author Rafael
  * @version 1.0
  * @created 28/07/2024
- * @updated 28/07/2024
+ * @updated 21/08/2024
  */
 public class IAApiInterfaceConfig {
     private static final Logger log = LogManager.getLogger(IAApiInterfaceConfig.class);
@@ -19,20 +20,14 @@ public class IAApiInterfaceConfig {
     private final Properties properties;
 
     private IAApiInterfaceConfig() {
-        properties = new Properties();
+        this.properties = new Properties();
         loadProperties();
     }
 
     private void loadProperties() {
-        try (InputStream input = getClass().getClassLoader().getResourceAsStream("config.properties")) {
-            if (input == null) {
-                log.error("No ha sido posible recuperar el fichero de configuración del sistema. Finalizando aplicación!");
-                System.exit(-1);
-                return;
-            }
-            properties.load(input);
-            input.close();
-        } catch (IOException e) {
+        try {
+            this.properties.load(new FileReader("config//config.properties"));
+        } catch (Exception e) {
             log.error("Ha ocurrido un error leyendo el fichero de configuración. Finaliza la aplicación!");
             log.error(String.format("Error: %s", e.getMessage()));
             if (e.getCause() != null) {

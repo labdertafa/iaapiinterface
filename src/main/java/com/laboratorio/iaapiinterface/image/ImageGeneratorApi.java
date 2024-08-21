@@ -124,7 +124,7 @@ public class ImageGeneratorApi {
         
         if (generatedFilePath != null) {
             imageFile = new ImagenGeneratorFile(generatedFilePath, mediaType);
-            log.info("Se ha creado el ImagenGeneratorFile que se enviará a las redes sociales para su publicación");
+            log.info("Se ha creado correctamente el ImagenGeneratorFile con la información de la imagen generada");
         }
         
         

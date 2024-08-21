@@ -1,4 +1,4 @@
-package com.laboratorio.iaaoiinterface;
+package com.laboratorio.iaapiinterface;
 
 import com.laboratorio.iaapiinterface.image.ImageGeneratorApi;
 import com.laboratorio.iaapiinterface.image.modelo.ImageGeneratorRequest;

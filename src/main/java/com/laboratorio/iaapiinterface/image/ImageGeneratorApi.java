@@ -23,7 +23,7 @@ import org.apache.logging.log4j.Logger;
  * @author Rafael
  * @version 1.1
  * @created 19/08/2024
- * @updated 21/08/2024
+ * @updated 25/09/2024
  */
 public class ImageGeneratorApi {
     protected static final Logger log = LogManager.getLogger(ImageGeneratorApi.class);
@@ -31,7 +31,7 @@ public class ImageGeneratorApi {
     private void logException(Exception e) {
         log.error("Error: " + e.getMessage());
         if (e.getCause() != null) {
-            log.error("Causa: " + e.getMessage());
+            log.error("Causa: " + e.getCause().getMessage());
         }
     }
     

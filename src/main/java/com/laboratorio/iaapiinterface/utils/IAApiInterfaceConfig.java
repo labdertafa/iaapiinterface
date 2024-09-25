@@ -1,8 +1,6 @@
 package com.laboratorio.iaapiinterface.utils;
 
 import java.io.FileReader;
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.Properties;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

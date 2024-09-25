@@ -22,7 +22,7 @@ import org.apache.logging.log4j.Logger;
  * @author Rafael
  * @version 2.0
  * @created 13/05/2023
- * @updated 09/08/2024
+ * @updated 25/09/2024
  */
 public class CompletionGPT {
     protected static final Logger log = LogManager.getLogger(CompletionGPT.class);
@@ -30,7 +30,7 @@ public class CompletionGPT {
     private void logException(Exception e) {
         log.error("Error: " + e.getMessage());
         if (e.getCause() != null) {
-            log.error("Causa: " + e.getMessage());
+            log.error("Causa: " + e.getCause().getMessage());
         }
     }
 

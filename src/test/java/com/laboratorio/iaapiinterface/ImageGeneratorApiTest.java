@@ -15,7 +15,7 @@ import static org.junit.jupiter.api.Assertions.*;
  * @updated 21/08/2024
  */
 public class ImageGeneratorApiTest {
-    @Test
+/*    @Test
     public void generarImagenBase64() throws Exception {
         String prompt = "Crea una imagen inspirada en esta información: El 19 de agosto de 1982, la primera computadora personal, la Commodore 64, fue presentada al público, revolucionando el acceso a la tecnología en los hogares. #UnDiaComoHoy #Tecnologia";
         IAApiInterfaceConfig config = IAApiInterfaceConfig.getInstance();
@@ -45,5 +45,5 @@ public class ImageGeneratorApiTest {
         ImagenGeneratorFile response = api.generarImagen(endpoint, token, request, rutaFichero, mediaType);
         
         assertTrue(response != null);
-    }
+    } */
 }

@@ -2,27 +2,24 @@ package com.laboratorio.iaapiinterface.text;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
-import com.laboratorio.iaapiinterface.text.exception.GPTApiException;
+import com.laboratorio.clientapilibrary.ApiClient;
+import com.laboratorio.clientapilibrary.exceptions.ApiClientException;
+import com.laboratorio.clientapilibrary.model.ApiMethodType;
+import com.laboratorio.clientapilibrary.model.ApiRequest;
+import com.laboratorio.clientapilibrary.model.ApiResponse;
 import com.laboratorio.iaapiinterface.text.modelo.MessageGPT;
 import com.laboratorio.iaapiinterface.text.modelo.ParametrosGPT;
 import com.laboratorio.iaapiinterface.text.modelo.RequestGPT;
 import com.laboratorio.iaapiinterface.text.modelo.ResponseGPT;
-import javax.ws.rs.client.Client;
-import javax.ws.rs.client.ClientBuilder;
-import javax.ws.rs.client.Entity;
-import javax.ws.rs.client.WebTarget;
-import javax.ws.rs.core.HttpHeaders;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 /**
  *
  * @author Rafael
- * @version 2.0
+ * @version 2.1
  * @created 13/05/2023
- * @updated 25/09/2024
+ * @updated 18/10/2024
  */
 public class CompletionGPT {
     protected static final Logger log = LogManager.getLogger(CompletionGPT.class);
@@ -35,48 +32,30 @@ public class CompletionGPT {
     }
 
     public ResponseGPT generarPost(String prompt, ParametrosGPT param) throws Exception {
-        Client client = ClientBuilder.newClient();
-        Response response = null;
-        
+        ApiClient client = new ApiClient();
         log.debug("Parámetros recibidos: " + param);        
         
         try {
             // Se prepara la Request
             MessageGPT message = new MessageGPT(param.getRole(), prompt);
-            RequestGPT request = new RequestGPT(param.getModel(), message, param.getMaxTokens(), param.getTemperature(), param.getRepetitionPenalty());
+            RequestGPT requestGPT = new RequestGPT(param.getModel(), message, param.getMaxTokens(), param.getTemperature(), param.getRepetitionPenalty());
             
             Gson gson = new Gson();
-            String requestJson = gson.toJson(request);
+            String requestJson = gson.toJson(requestGPT);
             log.debug("Request a enviar a GPT: " + requestJson);
             
             String url = param.getEndpoint();
-            WebTarget target = client.target(url);
+            ApiRequest request = new ApiRequest(url, 201, ApiMethodType.POST, requestJson);
+            request.addApiHeader("Authorization", "Bearer " + param.getBearerToken());
             
-            response = target.request(MediaType.APPLICATION_JSON)
-                    .header(HttpHeaders.AUTHORIZATION, "Bearer " + param.getBearerToken())
-                    .post(Entity.entity(requestJson, MediaType.APPLICATION_JSON));
+            ApiResponse response = client.executeApiRequest(request);
             
-            String responseJson = response.readEntity(String.class);
-            if (response.getStatus() != Response.Status.CREATED.getStatusCode()) {
-                log.error(String.format("Respuesta del error %d: %s", response.getStatus(), responseJson));
-                String str = "Error ejecutando: " + url + ". Se obtuvo el código de error: " + response.getStatus();
-                throw new GPTApiException(CompletionGPT.class.getName(), str);
-            }
-            
-            log.debug("Se ejecutó la query: " + url);
-            log.debug("Respuesta de GPT: " + responseJson);
-            
-            return gson.fromJson(responseJson, ResponseGPT.class);
+            return gson.fromJson(response.getResponseStr(), ResponseGPT.class);
         } catch (JsonSyntaxException e) {
             logException(e);
             throw e;
-        } catch (GPTApiException e) {
+        } catch (ApiClientException e) {
             throw e;
-        } finally {
-            if (response != null) {
-                response.close();
-            }
-            client.close();
         }
     }
 }

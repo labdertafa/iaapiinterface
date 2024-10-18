@@ -2,28 +2,25 @@ package com.laboratorio.iaapiinterface.image;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
-import com.laboratorio.iaapiinterface.image.exception.ImageGeneratorApiException;
+import com.laboratorio.clientapilibrary.ApiClient;
+import com.laboratorio.clientapilibrary.exceptions.ApiClientException;
+import com.laboratorio.clientapilibrary.model.ApiMethodType;
+import com.laboratorio.clientapilibrary.model.ApiRequest;
+import com.laboratorio.clientapilibrary.model.ApiResponse;
 import com.laboratorio.iaapiinterface.image.modelo.ImageGeneratorRequest;
 import com.laboratorio.iaapiinterface.image.modelo.ImageGeneratorResponse;
 import com.laboratorio.iaapiinterface.image.modelo.ImageGeneratorResponseUrl;
 import com.laboratorio.iaapiinterface.image.modelo.ImagenGeneratorFile;
 import com.laboratorio.iaapiinterface.image.utils.ImageGeneratorUtils;
-import javax.ws.rs.client.Client;
-import javax.ws.rs.client.ClientBuilder;
-import javax.ws.rs.client.Entity;
-import javax.ws.rs.client.WebTarget;
-import javax.ws.rs.core.HttpHeaders;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 /**
  *
  * @author Rafael
- * @version 1.1
+ * @version 1.2
  * @created 19/08/2024
- * @updated 25/09/2024
+ * @updated 18/10/2024
  */
 public class ImageGeneratorApi {
     protected static final Logger log = LogManager.getLogger(ImageGeneratorApi.class);
@@ -35,42 +32,26 @@ public class ImageGeneratorApi {
         }
     }
     
-    private String generateImage(String endpoint, String token, ImageGeneratorRequest request) throws Exception {
-        Client client = ClientBuilder.newClient();
-        Response response = null;
+    private String generateImage(String endpoint, String token, ImageGeneratorRequest imageGeneratorRequest) throws Exception {
+        ApiClient client = new ApiClient();
         
         try {
             Gson gson = new Gson();
-            String requestJson = gson.toJson(request);
+            String requestJson = gson.toJson(imageGeneratorRequest);
             log.debug("Request a enviar a GPT: " + requestJson);
             
             String url = endpoint;
-            WebTarget target = client.target(url);
+            ApiRequest request = new ApiRequest(url, 201, ApiMethodType.POST, requestJson);
+            request.addApiHeader("Authorization", "Bearer " + token);
             
-            response = target.request(MediaType.APPLICATION_JSON)
-                    .header(HttpHeaders.AUTHORIZATION, "Bearer " + token)
-                    .post(Entity.entity(requestJson, MediaType.APPLICATION_JSON));
+            ApiResponse response = client.executeApiRequest(request);
             
-            String responseJson = response.readEntity(String.class);
-            if (response.getStatus() != Response.Status.CREATED.getStatusCode()) {
-                log.error(String.format("Respuesta del error %d: %s", response.getStatus(), responseJson));
-                String str = "Error ejecutando: " + url + ". Se obtuvo el código de error: " + response.getStatus();
-                throw new ImageGeneratorApiException(ImageGeneratorApi.class.getName(), str);
-            }
-            
-            log.info("Se ejecutó la query: " + url);
-            
-            return responseJson;
-        } catch (ImageGeneratorApiException e) {
+            return response.getResponseStr();
+        } catch (ApiClientException e) {
             throw e;
         } catch (Exception e) {
             logException(e);
             throw e;
-        } finally {
-            if (response != null) {
-                response.close();
-            }
-            client.close();
         }
     }
     

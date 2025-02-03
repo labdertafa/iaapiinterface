@@ -1,6 +1,7 @@
 package com.laboratorio.iaapiinterface;
 
 import com.laboratorio.iaapiinterface.image.ImageGeneratorApi;
+import com.laboratorio.iaapiinterface.image.modelo.HuggingfaceImageRequest;
 import com.laboratorio.iaapiinterface.image.modelo.ImageGeneratorRequest;
 import com.laboratorio.iaapiinterface.image.modelo.ImagenGeneratorFile;
 import com.laboratorio.iaapiinterface.utils.IAApiInterfaceConfig;
@@ -10,9 +11,9 @@ import static org.junit.jupiter.api.Assertions.*;
 /**
  *
  * @author Rafael
- * @version 1.0
+ * @version 1.1
  * @created 21/08/2024
- * @updated 21/08/2024
+ * @updated 03/02/2024
  */
 public class ImageGeneratorApiTest {
 /*    @Test
@@ -46,4 +47,14 @@ public class ImageGeneratorApiTest {
         
         assertTrue(response != null);
     } */
+    
+    @Test
+    public void generarHuggingfaceImageTest() throws Exception {
+        String prompt = "El 3 de febrero de 2004, Facebook fue lanzado por Mark Zuckerberg y sus compañeros de cuarto de la Universidad de Harvard, cambiando para siempre la forma en que las personas se conectan y comparten información en línea.";
+        
+        ImageGeneratorApi api = new ImageGeneratorApi();
+        ImagenGeneratorFile response = api.generarHuggingfaceImage(prompt);
+        
+        assertNotNull(response);
+    }
 }

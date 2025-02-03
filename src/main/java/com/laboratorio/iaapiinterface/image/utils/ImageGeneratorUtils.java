@@ -8,6 +8,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 import javax.imageio.ImageIO;
 import org.apache.logging.log4j.LogManager;
@@ -16,9 +17,9 @@ import org.apache.logging.log4j.Logger;
 /**
  *
  * @author Rafael
- * @version 1.0
+ * @version 1.1
  * @created 20/08/2024
- * @updated 25/09/2024
+ * @updated 02/02/2024
  */
 public class ImageGeneratorUtils {
     private static final Logger log = LogManager.getLogger(ImageGeneratorUtils.class);
@@ -41,7 +42,7 @@ public class ImageGeneratorUtils {
         }
     }
 
-    // Guarda una imagen codificada un base 64 en el fichero destinationFile
+    // Guarda una imagen codificada en base 64 en el fichero destinationFile
     public static String decodificarImagenBase64(String codedImage, String destinationFile) {
         OutputStream os;
 
@@ -63,6 +64,31 @@ public class ImageGeneratorUtils {
             os.close();
         } catch (IOException e) {
             log.warn("Ha ocurrido un error cerrando el fichero de la imagen decodificada");
+        }
+        
+        return destinationFile;
+    }
+    
+    public static String almacenarImagen(byte[] imageData, String destinationFile) {
+        OutputStream os;
+        
+        try {
+            // Si existe el fichero se borra
+            deleteFile(destinationFile);
+            
+            os = new FileOutputStream(destinationFile);
+            os.write(imageData);
+            os.close();
+        } catch (IOException e) {
+            log.error("Ha ocurrido un error almacenando la imagen recibida");
+            logException(e);
+            return null;
+        }
+        
+        try {
+            os.close();
+        } catch (IOException e) {
+            log.warn("Ha ocurrido un error cerrando el fichero de la imagen almacenada");
         }
         
         return destinationFile;

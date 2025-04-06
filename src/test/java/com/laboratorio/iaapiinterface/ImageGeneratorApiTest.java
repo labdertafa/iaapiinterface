@@ -50,7 +50,7 @@ public class ImageGeneratorApiTest {
     
     @Test
     public void generarHuggingfaceImageTest() throws Exception {
-        String prompt = "El 3 de febrero de 2004, Facebook fue lanzado por Mark Zuckerberg y sus compañeros de cuarto de la Universidad de Harvard, cambiando para siempre la forma en que las personas se conectan y comparten información en línea.";
+        String prompt = "Crea una imagen que se pueda asociar a información: El 3 de febrero de 2004, Facebook fue lanzado por Mark Zuckerberg y sus compañeros de cuarto de la Universidad de Harvard, cambiando para siempre la forma en que las personas se conectan y comparten información en línea.";
         
         ImageGeneratorApi api = new ImageGeneratorApi();
         ImagenGeneratorFile response = api.generarHuggingfaceImage(prompt);

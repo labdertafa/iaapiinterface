@@ -17,9 +17,9 @@ import org.apache.logging.log4j.Logger;
 /**
  *
  * @author Rafael
- * @version 2.1
+ * @version 2.2
  * @created 13/05/2023
- * @updated 18/10/2024
+ * @updated 06/04/2025
  */
 public class CompletionGPT {
     protected static final Logger log = LogManager.getLogger(CompletionGPT.class);
@@ -38,14 +38,15 @@ public class CompletionGPT {
         try {
             // Se prepara la Request
             MessageGPT message = new MessageGPT(param.getRole(), prompt);
-            RequestGPT requestGPT = new RequestGPT(param.getModel(), message, param.getMaxTokens(), param.getTemperature(), param.getRepetitionPenalty());
+            RequestGPT requestGPT = new RequestGPT(param.getModel(), message, param.getMaxTokens(), param.getTemperature());
             
             Gson gson = new Gson();
             String requestJson = gson.toJson(requestGPT);
             log.debug("Request a enviar a GPT: " + requestJson);
             
             String url = param.getEndpoint();
-            ApiRequest request = new ApiRequest(url, 201, ApiMethodType.POST, requestJson);
+            int okResponse = param.getOkResponse();
+            ApiRequest request = new ApiRequest(url, okResponse, ApiMethodType.POST, requestJson);
             request.addApiHeader("Authorization", "Bearer " + param.getBearerToken());
             
             ApiResponse response = client.executeApiRequest(request);

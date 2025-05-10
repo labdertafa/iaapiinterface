@@ -1,10 +1,10 @@
 package com.laboratorio.iaapiinterface;
 
+import com.laboratorio.clientapilibrary.utils.ReaderConfig;
 import com.laboratorio.iaapiinterface.image.ImageGeneratorApi;
 import com.laboratorio.iaapiinterface.image.modelo.HuggingfaceImageRequest;
 import com.laboratorio.iaapiinterface.image.modelo.ImageGeneratorRequest;
 import com.laboratorio.iaapiinterface.image.modelo.ImagenGeneratorFile;
-import com.laboratorio.iaapiinterface.utils.IAApiInterfaceConfig;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -13,13 +13,13 @@ import static org.junit.jupiter.api.Assertions.*;
  * @author Rafael
  * @version 1.1
  * @created 21/08/2024
- * @updated 03/02/2024
+ * @updated 10/05/2025
  */
 public class ImageGeneratorApiTest {
-/*    @Test
+    /* @Test
     public void generarImagenBase64() throws Exception {
         String prompt = "Crea una imagen inspirada en esta información: El 19 de agosto de 1982, la primera computadora personal, la Commodore 64, fue presentada al público, revolucionando el acceso a la tecnología en los hogares. #UnDiaComoHoy #Tecnologia";
-        IAApiInterfaceConfig config = IAApiInterfaceConfig.getInstance();
+        ReaderConfig config = new ReaderConfig("config//ia_api_config.properties");
         String token = config.getProperty("bearer_token");
         String rutaFichero = config.getProperty("temporal_image_path");
         String mediaType = config.getProperty("image_media_type");
@@ -35,7 +35,7 @@ public class ImageGeneratorApiTest {
     @Test
     public void generarImagenUrl() throws Exception {
         String prompt = "Crea una imagen inspirada en esta información: El 21 de agosto de 1994, se celebró el Gran Premio de Bélgica en Spa-Francorchamps, donde Damon Hill logró su primera victoria en F1, marcando un hito en su carrera y en la historia del campeonato. #UnDiaComoHoy #Formula1 #F1";
-        IAApiInterfaceConfig config = IAApiInterfaceConfig.getInstance();
+        ReaderConfig config = new ReaderConfig("config//ia_api_config.properties");
         String token = config.getProperty("bearer_token");
         String rutaFichero = config.getProperty("temporal_image_path");
         String mediaType = config.getProperty("image_media_type");

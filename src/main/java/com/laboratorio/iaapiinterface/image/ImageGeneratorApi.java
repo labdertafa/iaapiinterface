@@ -7,6 +7,7 @@ import com.laboratorio.clientapilibrary.exceptions.ApiClientException;
 import com.laboratorio.clientapilibrary.model.ApiMethodType;
 import com.laboratorio.clientapilibrary.model.ApiRequest;
 import com.laboratorio.clientapilibrary.model.ApiResponse;
+import com.laboratorio.clientapilibrary.utils.ReaderConfig;
 import com.laboratorio.iaapiinterface.image.modelo.HuggingfaceImageRequest;
 import com.laboratorio.iaapiinterface.image.modelo.HuggingfaceParameters;
 import com.laboratorio.iaapiinterface.image.modelo.ImageGeneratorRequest;
@@ -14,7 +15,6 @@ import com.laboratorio.iaapiinterface.image.modelo.ImageGeneratorResponse;
 import com.laboratorio.iaapiinterface.image.modelo.ImageGeneratorResponseUrl;
 import com.laboratorio.iaapiinterface.image.modelo.ImagenGeneratorFile;
 import com.laboratorio.iaapiinterface.image.utils.ImageGeneratorUtils;
-import com.laboratorio.iaapiinterface.utils.IAApiInterfaceConfig;
 import java.util.List;
 import java.util.Map;
 import org.apache.logging.log4j.LogManager;
@@ -25,7 +25,7 @@ import org.apache.logging.log4j.Logger;
  * @author Rafael
  * @version 1.3
  * @created 19/08/2024
- * @updated 03/02/2025
+ * @updated 10/05/2025
  */
 public class ImageGeneratorApi {
     protected static final Logger log = LogManager.getLogger(ImageGeneratorApi.class);
@@ -141,7 +141,7 @@ public class ImageGeneratorApi {
         String generatedFilePath;
         
         try {
-            IAApiInterfaceConfig config = IAApiInterfaceConfig.getInstance();
+            ReaderConfig config = new ReaderConfig("config//ia_api_config.properties");
             String endpoint = config.getProperty("image_endpoint");
             int okResponse = Integer.parseInt(config.getProperty("image_endpoint_response"));
             String token = config.getProperty("image_token");

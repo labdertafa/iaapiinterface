@@ -1,9 +1,9 @@
 package com.laboratorio.iaapiinterface;
 
+import com.laboratorio.clientapilibrary.utils.ReaderConfig;
 import com.laboratorio.iaapiinterface.text.CompletionGPT;
 import com.laboratorio.iaapiinterface.text.modelo.ParametrosGPT;
 import com.laboratorio.iaapiinterface.text.modelo.ResponseGPT;
-import com.laboratorio.iaapiinterface.utils.IAApiInterfaceConfig;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -12,13 +12,13 @@ import static org.junit.jupiter.api.Assertions.*;
  * @author Rafael
  * @version 1.1
  * @created 06/08/2024
- * @updated 06/04/2025
+ * @updated 10/05/2025
  */
 public class CompletionGPTTest {
     @Test
     public void generarPost() throws Exception {
         String prompt = "Dime algo gracioso";
-        IAApiInterfaceConfig config = IAApiInterfaceConfig.getInstance();
+        ReaderConfig config = new ReaderConfig("config//ia_api_config.properties");
         String token = config.getProperty("bearer_token");
         String endpoint = config.getProperty("text_endpoint");
         int oKResponse = Integer.valueOf(config.getProperty("ok_response"));

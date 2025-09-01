@@ -8,7 +8,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.URL;
-import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 import javax.imageio.ImageIO;
 import org.apache.logging.log4j.LogManager;
@@ -19,7 +18,7 @@ import org.apache.logging.log4j.Logger;
  * @author Rafael
  * @version 1.1
  * @created 20/08/2024
- * @updated 02/02/2024
+ * @updated 01/09/2025
  */
 public class ImageGeneratorUtils {
     private static final Logger log = LogManager.getLogger(ImageGeneratorUtils.class);
@@ -116,18 +115,6 @@ public class ImageGeneratorUtils {
             // Si existe el fichero se borra
             deleteFile(destinationFile);
             
-/*            // Crear una URL con la cadena proporcionada
-            URL url = new URL(imageUrl);
-            
-            // Abrir una conexión de stream de entrada desde la URL
-            InputStream in = url.openStream();
-            
-            // Definir la ruta de destino para el archivo
-            Path destinationPath = Paths.get(destinationFile);
-            
-            // Guardar el contenido del InputStream en la ruta de destino
-            Files.copy(in, destinationPath); */
-
             // Descargar la imagen desde la URL
             BufferedImage originalImage = ImageIO.read(new URL(imageUrl));
 

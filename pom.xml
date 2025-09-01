@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.laboratorio</groupId>
     <artifactId>iaapiinterface</artifactId>
-    <version>1.1.4</version>
+    <version>1.1.5</version>
     <packaging>jar</packaging>
     <name>IA-Api-Interface</name>
     <description>Librería que ejecuta las API de la para generar texto e imágenes con inteligencia artificial</description>

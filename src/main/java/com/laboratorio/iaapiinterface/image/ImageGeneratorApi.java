@@ -18,9 +18,9 @@ import org.apache.logging.log4j.Logger;
 /**
  *
  * @author Rafael
- * @version 1.4
+ * @version 1.5
  * @created 19/08/2024
- * @updated 01/09/2025
+ * @updated 06/10/2025
  */
 public class ImageGeneratorApi {
     protected static final Logger log = LogManager.getLogger(ImageGeneratorApi.class);
@@ -61,12 +61,13 @@ public class ImageGeneratorApi {
             String token = config.getProperty("bearer_token");
             String destinationFile = config.getProperty("temporal_image_path");
             String mediaType = config.getProperty("image_media_type");
+            String model = config.getProperty("image_default_model");
             double guidanceScale = Double.parseDouble(config.getProperty("image_default_guidanceScale"));
             int numInferenceSteps = Integer.parseInt(config.getProperty("image_default_numInferenceSteps"));
             int height = Integer.parseInt(config.getProperty("image_default_height"));
             int width = Integer.parseInt(config.getProperty("image_default_width"));
 
-            ImageGeneratorRequest imageRequest = new ImageGeneratorRequest(prompt, width, height, guidanceScale, numInferenceSteps);
+            ImageGeneratorRequest imageRequest = new ImageGeneratorRequest(model, prompt, width, height, guidanceScale, numInferenceSteps);
             Gson gson = new Gson();
             String requestJson = gson.toJson(imageRequest);
             log.debug("Request a enviar: " + requestJson);
